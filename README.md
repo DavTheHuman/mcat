@@ -1,6 +1,6 @@
 # MCAT - Download ALL THE MUSIC
 
-This tool interfaces with the Monster Cat connect API and allows you to download their entire collection.
+This tool interfaces with the Monstercat Connect API and allows you to download their entire collection.
 
 ## Usage:
 
@@ -16,15 +16,15 @@ Import the downloaded tracks to iTunes `things-to-download.json > mcat import | 
 
 Main Help:
 ```
-CLI tool to interface with the MonsterCat Connect API.
+CLI tool to interface with the Monstercat Connect API.
 
 This tool is best used for syncing a target group of tracks with your local machiene (i.e. iTunes).
 
 Commands:
 
-  auth            - Create a session with the MonsterCat Connnect service.
+  auth            - Create a session with the Monstercat Connnect service.
   session         - Check the status of the current session.
-  syncCatalog     - Syncs MonsterCat's entire catalog to the local cache.
+  syncCatalog     - Syncs Monstercat's entire catalog to the local cache.
   select          - Selects a set of tracks from the cache using the given options.
   download        - Downloads the tracks the specified file.
   importItunes    - Imports the paths into iTunes.
@@ -35,7 +35,7 @@ Commands:
 Select Help:
 
 ```
-Filters songs from the cached MonsterCat Catalog.
+Filters songs from the cached Monstercat Catalog.
 
 Options:
 
