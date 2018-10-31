@@ -1,7 +1,7 @@
 const monstercat = require('../lib/monstercat')
 
 const session = (dbg, args, done) => {
-  console.log("-- 💌  Sending session request to MonsterCat...")
+  console.log("-- 💌  Sending session request to Monstercat...")
   monstercat.request('GET', '/api/self/session', (err, res, body)=> {
     if (err) return done(err)
     parsedBody = JSON.parse(body)
