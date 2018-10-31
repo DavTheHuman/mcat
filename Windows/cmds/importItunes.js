@@ -1,5 +1,5 @@
 const _ = require('lodash')
-const music = require('../lib/music')
+const music = require('..\\lib\\music')
 
 const importIntoItues = (dbg, args, done)=> {
   music.readStdinJSON((err, tracks)=> {

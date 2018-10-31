@@ -1,5 +1,5 @@
 const _ = require('lodash')
-const monstercat = require('../lib/monstercat')
+const monstercat = require('..\\lib\\monstercat')
 
 const not = (fn)=> {
   return (e) => { return !fn(e) }

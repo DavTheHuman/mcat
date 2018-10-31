@@ -1,4 +1,4 @@
-const monstercat = require('../lib/monstercat')
+const monstercat = require('..\\lib\\monstercat')
 
 const session = (dbg, args, done) => {
   console.log("-- 💌  Sending session request to Monstercat...")

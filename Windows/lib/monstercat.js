@@ -4,9 +4,9 @@ const path = require('path')
 const request = require('request');
 const FileCookieStore = require('tough-cookie-filestore');
 
-const STATE_PATH = path.join(process.env.HOME, "/.mcat")
-const COOKIE_JAR_PATH = path.join(STATE_PATH, "/session")
-const CATALOG_PATH = path.join(STATE_PATH, "/catalog.json")
+const STATE_PATH = path.join(process.env.HOME, "\\.mcat")
+const COOKIE_JAR_PATH = path.join(STATE_PATH, "\\session")
+const CATALOG_PATH = path.join(STATE_PATH, "\\catalog.json")
 
 const MC_SERVER = "https://connect.monstercat.com"
 
@@ -34,7 +34,7 @@ const mcRequest = (method, path, options, done)=> {
   request(options, (err, res, body)=> {
     if (err) return done(err)
     if (Math.floor(res.statusCode/100) != 2) {
-      return done(new Error(`MonsterCat: ${body.message} (${res.statusCode})`))
+      return done(new Error(`Monstercat: ${body.message} (${res.statusCode})`))
     }
     return done(err, res, body)
   });
@@ -49,4 +49,3 @@ const mcDownload = (uri, destinationPath, done)=> {
 }
 
 module.exports = { request: mcRequest, download: mcDownload, STATE_PATH, COOKIE_JAR_PATH, CATALOG_PATH }
-

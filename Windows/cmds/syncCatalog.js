@@ -1,6 +1,6 @@
 const fs = require('fs')
 const _ = require('lodash')
-const monstercat = require('../lib/monstercat')
+const monstercat = require('..\\lib\\monstercat')
 
 const PAGE_SIZE = 50
 const getPage = (pageNum, results, done)=> {

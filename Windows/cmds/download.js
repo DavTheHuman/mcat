@@ -2,9 +2,9 @@ const fs = require('fs')
 const _ = require('lodash')
 const async = require('async')
 const path = require('path')
-const monstercat = require('../lib/monstercat')
+const monstercat = require('..\\lib\\monstercat')
 
-const music = require('../lib/music')
+const music = require('..\\lib\\music')
 const MUSIC_DIR = music.MUSIC_DIR
 const fileNameForTrack = music.fileNameForTrack
 const fileNameForAlbumArt = music.fileNameForAlbumArt

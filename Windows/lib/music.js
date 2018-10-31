@@ -2,9 +2,9 @@ const path = require('path')
 const _ = require('lodash')
 const fs = require('fs')
 
-const MUSIC_DIR = path.join(process.env.HOME, '/Music')
-const fileNameForTrack = (track)=> path.join(MUSIC_DIR, `/${track.artistsTitle}/${track.release.title}/${track.title}.mp3`)
-const fileNameForAlbumArt = (track)=> path.join(MUSIC_DIR, `/${track.artistsTitle}/${track.release.title}/folder.jpg`)
+const MUSIC_DIR = path.join(process.env.HOME, '\\Music')
+const fileNameForTrack = (track)=> path.join(MUSIC_DIR, `\\${track.artistsTitle}\\${track.release.title}\\${track.title}.mp3`)
+const fileNameForAlbumArt = (track)=> path.join(MUSIC_DIR, `\\${track.artistsTitle}\\${track.release.title}\\folder.jpg`)
 
 const readStdinJSON = (done)=> {
   var input = ''

@@ -1,7 +1,7 @@
 const _ = require("lodash")
 const read = require("read");
 const async = require("async")
-const monstercat = require('../lib/monstercat')
+const monstercat = require('..\\lib\\monstercat')
 
 const auth = (dbg, args, done) => {
   console.log("Please enter your Monstercat Connect credentials...")
