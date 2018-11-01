@@ -5,7 +5,7 @@ This tool interfaces with the Monstercat Connect API and allows you to download 
 ## Usage:
 
 
-Select all the good stuff: `mcat syncCatalog && mcat select --uniq-track --no-long-mix --no-remix > things-to-download.json`
+Select all the good stuff: `mcat syncCatalog && mcat select --uniq-track --no-long-mix --no-remix --downloadable > things-to-download.json`
 
 Count tracks released after a date `mcat select --after 10-10-2017 --count`
 
