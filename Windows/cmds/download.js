@@ -4,6 +4,8 @@ const async = require('async')
 const path = require('path')
 const monstercat = require('..\\lib\\monstercat')
 
+const fspvr = require('fspvr')
+
 const music = require('..\\lib\\music')
 const MUSIC_DIR = music.MUSIC_DIR
 const fileNameForTrack = music.fileNameForTrack
@@ -43,8 +45,8 @@ const download = (dbg, args, done) => {
       tasks[t.fsPath] = t
     }
     _.each(tracks, (t)=> {
-      addTask({ type: 'music', uri: trackToDownloadURL(t), fsPath: fileNameForTrack(t) }, t)
-      addTask({ type: 'image', uri: t.release.coverUrl, fsPath: fileNameForAlbumArt(t) }, t)
+      addTask({ type: 'music', uri: trackToDownloadURL(t), fsPath: fspvr.reformatPath(fileNameForTrack(t)) }, t)
+      addTask({ type: 'image', uri: t.release.coverUrl, fsPath: fspvr.reformatPath(fileNameForAlbumArt(t)) }, t)
     })
 
 
