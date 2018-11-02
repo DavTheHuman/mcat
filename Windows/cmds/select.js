@@ -84,7 +84,7 @@ const select = (dbg, args, done) => {
   }
 
   if (_.includes(args, '--count')) {
-    console.log(`-- 🔦  Matched ${res.length} of ${catalog.length} entries.`)
+    console.log(`-- Matched ${res.length} of ${catalog.length} entries.`)
     return done()
   }
 

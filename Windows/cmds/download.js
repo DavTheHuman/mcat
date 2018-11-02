@@ -21,15 +21,15 @@ const trackToDownloadURL = (track) => {
 const taskId = (task)=> task.type + task.uri + task.fs
 const performTask = ({type, uri, fsPath, title}, next)=> {
   if (fs.existsSync(fsPath) || process.env.MC_DRY) {
-    console.log(`-- ⚠️  Skipping download of '${title}' file already exists at destination!`)
+    console.log(`-- Skipping download of '${title}' file already exists at destination!`)
     return next()
   }
 
   ensureDir(path.dirname(fsPath))
-  console.log(`-- 💌  Starting download of '${title}'`)
+  console.log(`-- Starting download of '${title}'`)
   monstercat.download(uri, fsPath, (err)=> {
     if (err) return next(err)
-    console.log(`-- ✅ 🔥 Finished download of '${title}'`)
+    console.log(`-- Finished download of '${title}'`)
     next()
   })
 }
@@ -37,7 +37,7 @@ const performTask = ({type, uri, fsPath, title}, next)=> {
 const download = (dbg, args, done) => {
   readStdinJSON((err, tracks)=> {
     if (err) return done(err)
-    console.log(`-- 💡  Got ${tracks.length} tracks...`)
+    console.log(`-- Got ${tracks.length} tracks...`)
     var tasks = {}
     addTask = (t, {artistsTitle, title})=> {
       t.title = `${artistsTitle} - ${title}`
@@ -55,10 +55,10 @@ const download = (dbg, args, done) => {
     tally = (obj, type)=> { obj[type] = (obj[type] || 0) + 1 }
     _.each(endTasks, ({type})=> { tally(typeStats, type)
     });
-    console.log(`-- 🔥 🔥  Starting Download of ${typeStats.music} songs for ${typeStats.image} albums.`)
+    console.log(`-- Starting Download of ${typeStats.music} songs for ${typeStats.image} albums.`)
     async.eachLimit(endTasks, 32, performTask, (err)=> {
       if (err) return done(err)
-      console.log(`-- ✅ 🔥 Finished downloading all ${typeStats.music} songs and ${typeStats.image} images; avalible at '${MUSIC_DIR}'`)
+      console.log(`-- Finished downloading all ${typeStats.music} songs and ${typeStats.image} images; avalible at '${MUSIC_DIR}'`)
       done()
     })
   });

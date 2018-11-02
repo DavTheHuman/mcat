@@ -12,10 +12,10 @@ const auth = (dbg, args, done) => {
     if (err) return done(err)
     const body = _.mapValues(credentials, "0")
 
-    console.log("-- 🔐  Sending Authentication Request to Monstercat...")
+    console.log("-- Sending Authentication Request to Monstercat...")
     monstercat.request('POST', '/signin', { body, json: true }, (err, res, body)=> {
       if (err) return done(err)
-      console.log("-- ✅  Authenticated with Monstercat Connect!")
+      console.log("-- Authenticated with Monstercat Connect!")
 
       // The cookie file system store is not sync, wait long enough for it to write
       setTimeout(done,  2000)
