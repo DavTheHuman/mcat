@@ -8,7 +8,7 @@ This tool interfaces with the Monstercat Connect API and allows you to download 
 ```
 CLI tool to interface with the Monstercat Connect API.
 
-This tool is best used for syncing a target group of tracks with your local machiene (i.e. iTunes).
+This tool is best used for syncing a target group of tracks with your local machine (i.e. iTunes).
 
 Commands:
 
