@@ -10,7 +10,7 @@ const CATALOG_PATH = path.join(STATE_PATH, "\\catalog.json")
 
 const MC_SERVER = "https://connect.monstercat.com"
 
-// Monster Cat connect API uses cookies; persist these and other state.
+// Monstercat connect API uses cookies; persist these and other state.
 var __mcJar;
 const _initStateStore = ()=> {
   if (__mcJar) return

@@ -69,7 +69,7 @@ const select = (dbg, args, done) => {
 
   if (_.includes(args, 'help') || _.includes(args, '--help') || args.length == 1) {
     lines = [
-      "Filters songs from the cached MonsterCat Catalog.",
+      "Filters songs from the cached Monstercat Catalog.",
       "",
       "Options:",
       "",

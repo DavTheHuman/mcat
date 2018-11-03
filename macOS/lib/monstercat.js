@@ -10,7 +10,7 @@ const CATALOG_PATH = path.join(STATE_PATH, "/catalog.json")
 
 const MC_SERVER = "https://connect.monstercat.com"
 
-// Monster Cat connect API uses cookies; persist these and other state.
+// Monstercat connect API uses cookies; persist these and other state.
 var __mcJar;
 const _initStateStore = ()=> {
   if (__mcJar) return
@@ -34,7 +34,7 @@ const mcRequest = (method, path, options, done)=> {
   request(options, (err, res, body)=> {
     if (err) return done(err)
     if (Math.floor(res.statusCode/100) != 2) {
-      return done(new Error(`MonsterCat: ${body.message} (${res.statusCode})`))
+      return done(new Error(`Monstercat: ${body.message} (${res.statusCode})`))
     }
     return done(err, res, body)
   });
@@ -49,4 +49,3 @@ const mcDownload = (uri, destinationPath, done)=> {
 }
 
 module.exports = { request: mcRequest, download: mcDownload, STATE_PATH, COOKIE_JAR_PATH, CATALOG_PATH }
-
