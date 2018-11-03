@@ -12,7 +12,7 @@ const printHelp = (log, args, done)=> {
   indent(0)
   addLine('CLI tool to interface with the MonsterCat Connect API.')
   addLine()
-  addLine("This tool is best used for syncing a target group of tracks with your local machiene (i.e. iTunes).")
+  addLine("This tool is best used for syncing a target group of tracks with your local machine (i.e. iTunes).")
   addLine()
 
   // Commands Block
