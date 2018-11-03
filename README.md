@@ -4,16 +4,19 @@ This tool interfaces with the Monstercat Connect API and allows you to download 
 
 ## Usage:
 
+### macOS:
 
 Select all the good stuff: `mcat syncCatalog && mcat select --uniq-track --no-long-mix --no-remix --downloadable > things-to-download.json`
 
 Count tracks released after a date `mcat select --after 10-10-2017 --count`
 
-Download the selected items (macOS) `mcat download < things-to-download.json`
+Download the selected items `mcat download < things-to-download.json`
 
+Import the downloaded tracks to iTunes `things-to-download.json > mcat import | sh`
+
+### Windows:
+(Unfinished)
 Download the selected items (Windows) `cat things-to-download.json | node mcat/Windows/index.js download`
-
-Import the downloaded tracks to iTunes `things-to-download.json > mcat import | sh` (Untested on Windows)
 
 
 Main Help:
