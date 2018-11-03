@@ -5,6 +5,7 @@ This tool interfaces with the Monstercat Connect API and allows you to download 
 ## Usage:
 
 To install, move the macOS or Windows folder to the desired location, then run the setup file for your OS.
+Node.js is required, as well as the dependencies listed in the package.json file.
 
 #### Main Help:
 ```
