@@ -4,6 +4,8 @@ This tool interfaces with the Monstercat Connect API and allows you to download 
 
 ## Usage:
 
+To install, move the macOS or Windows folder to the desired location, then run the setup file for your OS.
+
 #### Main Help:
 ```
 CLI tool to interface with the Monstercat Connect API.
@@ -60,12 +62,11 @@ Download the selected items: `mcat download < things-to-download.json`
 Import the downloaded tracks to iTunes: `things-to-download.json > mcat import | sh`
 
 #### Windows:
-(Unfinished)
 
-Select all the good stuff: `mcat syncCatalog` and `mcat select --uniq-track --no-long-mix --no-remix --downloadable > things-to-download.json`
+Select all the good stuff: `mcat syncCatalog` and then `mcat select --uniq-track --no-long-mix --no-remix --downloadable > things-to-download.json`
 
 Count tracks released after a date: `mcat select --after 10-10-2017 --count`
 
 Download the selected items: `cat things-to-download.json | mcat download`
 
-Import the downloaded tracks to iTunes: no clue
+Import the downloaded tracks to iTunes: Untested
