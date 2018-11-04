@@ -19,7 +19,7 @@ const trackToDownloadURL = (track) => {
 const taskId = (task)=> task.type + task.uri + task.fs
 const performTask = ({type, uri, fsPath, title}, next)=> {
   if (fs.existsSync(fsPath) || process.env.MC_DRY) {
-    console.log(`-- ⚠️  Skiping download of '${title}' file already exists at destination!`)
+    console.log(`-- ⚠️  Skipping download of '${title}' file already exists at destination!`)
     return next()
   }
 
