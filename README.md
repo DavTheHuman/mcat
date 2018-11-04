@@ -8,6 +8,7 @@ To install, move the macOS or Windows folder to the desired location, then run t
 Node.js is required, as well as the dependencies listed in the package.json file.
 
 #### Main Help:
+
 ```
 CLI tool to interface with the Monstercat Connect API.
 
