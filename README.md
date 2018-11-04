@@ -24,6 +24,7 @@ Commands:
   logOut          - Destroys the current session.
   help            - Prints this help text.
 ```
+*importItunes is only available on macOS
 
 #### Select Help:
 
@@ -69,5 +70,3 @@ Select all the good stuff: `mcat syncCatalog` and then `mcat select --uniq-track
 Count tracks released after a date: `mcat select --after 10-10-2017 --count`
 
 Download the selected items: `cat things-to-download.json | mcat download`
-
-Import the downloaded tracks to iTunes: Untested
