@@ -12,6 +12,7 @@
     "async": "^2.5.0",
     "debug": "^3.0.1",
     "lodash": "^4.17.4",
+    "read": "^1.0.7",
     "request": "^2.81.0",
     "supports-color": "^4.4.0",
     "tough-cookie-filestore": "0.0.1"
