@@ -25,6 +25,23 @@ const isBefore = (dateStr)=> {
   }
 }
 
+const releaseAfter = (dateStr)=> {
+  var time = new Date(dateStr).getTime()
+  return ({releaseDate}) => {
+    return new Date(releaseDate).getTime() > time
+  }
+}
+const releaseBefore = (dateStr)=> {
+  var time = new Date(dateStr).getTime()
+  return ({releaseDate}) => {
+    return new Date(releaseDate).getTime() < time
+  }
+}
+
+const releaseType = (onlyType) => {
+  return ({type}) => type == onlyType
+}
+
 const select = (dbg, args, done) => {
   const catalog = require(monstercat.CATALOG_PATH);
   var res = catalog
@@ -49,6 +66,8 @@ const select = (dbg, args, done) => {
     res = _.filter(res, filterFn(nextArg))
   }
 
+  if (catalog[0].catalogId == undefined)
+  {
   runFilterIf('--remix', isRemix, 'Selects only remixes.')
   runFilterIf('--no-remix', not(isRemix), 'Excludes remixes')
 
@@ -60,11 +79,22 @@ const select = (dbg, args, done) => {
 
   runFilterIf('--featuring', isFeaturing, 'Selects only songs which feature an artist.')
 
-  runFilterIf('--downloadable', {downloadable: true}, 'Selects only downloadable songs.')
-  runFilterIf('--early-access', {inEarlyAccess: true}, 'Selects songs only avalible for early access.')
-
   runFilterWithArg('--after', isAfter, 'Selects songs debuted after the specified date.')
   runFilterWithArg('--before', isBefore, 'Selects songs debuted before the specified date.')
+  }
+  else
+  {
+  runFilterWithArg('--type', releaseType, 'Selects only releases of a specified type (Single, EP, Album, or Podcast)')
+  runFilterIf('--no-single', not(releaseType('Single')), 'Excludes singles')
+  runFilterIf('--no-ep', not(releaseType('EP')), 'Excludes EPs')
+  runFilterIf('--no-album', not(releaseType('Album')), 'Excludes albums')
+  runFilterIf('--no-podcast', not(releaseType('Podcast')), 'Excludes podcasts')
+  runFilterWithArg('--after', releaseAfter, 'Selects releases after the specified date.')
+  runFilterWithArg('--before', releaseBefore, 'Selects releases before the specified date.')
+  }
+
+  runFilterIf('--downloadable', {downloadable: true}, 'Selects only downloadable songs.')
+  runFilterIf('--early-access', {inEarlyAccess: true}, 'Selects songs only avalible for early access.')
 
   if (_.includes(args, '--uniq-track')) res = _.values(_.fromPairs(_.map(res, (t) => [t.id, t])))
 
