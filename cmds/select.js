@@ -4,23 +4,24 @@ const monstercat = require('../lib/monstercat')
 const not = (fn)=> {
   return (e) => { return !fn(e) }
 }
-const isRemix = ({remixers, title})=> (remixers || []).length != 0 || /remix/i.test(title)
+const isRemixer = (artist) => artist.role == "Remixer"
+const isFeatured = (artist) => artist.role == "Featured"
+const isRemix = ({artists, version, tags})=> artists.findIndex(isRemixer) != -1 || /remix/i.test(version) || tags.indexOf("Remix") != -1
 const isColab = ({artists})=> (artists || []).length > 1
-const isFeaturing = ({featuring, title})=> (featuring || []).length != 0 || /feat/i.test(title)
+const isFeaturing = ({artists, title})=> artists.findIndex(isFeatured) != -1 || /feat/i.test(title)
 
-const PODCAST_MIN_LENGTH = 60 * 20
-const isLongMix = ({duration, title})=> duration > PODCAST_MIN_LENGTH || /Podcast|Album Mix/i.test(title)
+const isLongMix = ({title, release})=> /Podcast|Album Mix/i.test(title) || release.type == "Podcast"
 
 const isAfter = (dateStr)=> {
   var time = new Date(dateStr).getTime()
-  return ({created}) => {
-    return new Date(created).getTime() > time
+  return ({debutDate}) => {
+    return new Date(debutDate).getTime() > time
   }
 }
 const isBefore = (dateStr)=> {
   var time = new Date(dateStr).getTime()
-  return ({created}) => {
-    return new Date(created).getTime() < time
+  return ({debutDate}) => {
+    return new Date(debutDate).getTime() < time
   }
 }
 
@@ -62,10 +63,10 @@ const select = (dbg, args, done) => {
   runFilterIf('--downloadable', {downloadable: true}, 'Selects only downloadable songs.')
   runFilterIf('--early-access', {inEarlyAccess: true}, 'Selects songs only avalible for early access.')
 
-  runFilterWithArg('--after', isAfter, 'Selects songs created after the specified date.')
-  runFilterWithArg('--before', isBefore, 'Selects songs created before the specified date.')
+  runFilterWithArg('--after', isAfter, 'Selects songs debuted after the specified date.')
+  runFilterWithArg('--before', isBefore, 'Selects songs debuted before the specified date.')
 
-  if (_.includes(args, '--uniq-track')) res = _.values(_.fromPairs(_.map(res, (t) => [t._id, t])))
+  if (_.includes(args, '--uniq-track')) res = _.values(_.fromPairs(_.map(res, (t) => [t.id, t])))
 
   if (_.includes(args, 'help') || _.includes(args, '--help') || args.length == 1) {
     lines = [
@@ -89,7 +90,7 @@ const select = (dbg, args, done) => {
   }
 
   if (_.includes(args, '--schema')) {
-    console.log(catalog[0])
+    console.log(res[0])
     return done()
   }
 

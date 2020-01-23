@@ -9,7 +9,7 @@ const getPage = (pageNum, results, done)=> {
     results = []
   }
   console.log(`-- 💌  Requesting Monstercat Catalog (page ${pageNum}).`)
-  monstercat.request('GET', `/api/catalog/browse?limit=${PAGE_SIZE}&skip=${pageNum * PAGE_SIZE}`, (err, res, body)=> {
+  monstercat.request('GET', `/v2/catalog/browse?limit=${PAGE_SIZE}&skip=${pageNum * PAGE_SIZE}`, (err, res, body)=> {
     if (err) return done(err, null, false)
     const parsedBody = JSON.parse(body)
     console.log(`-- ⬇️  Got ${parsedBody.results.length} tracks from Monstercat Catalog (page ${pageNum}).`)
