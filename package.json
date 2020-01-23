@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "adm-zip": "^0.4.13",
     "async": "^2.5.0",
     "debug": "^3.0.1",
     "fspvr": "^1.0.7",

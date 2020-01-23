@@ -3,6 +3,7 @@ const _ = require('lodash')
 const async = require('async')
 const path = require('path')
 const fspvr = require('fspvr')
+const admzip = require('adm-zip')
 const monstercat = require('../lib/monstercat')
 
 const music = require('../lib/music')
@@ -40,6 +41,13 @@ const performTask = ({type, uri, fsPath, title}, next)=> {
   monstercat.download(uri, fsPath, (err)=> {
     if (err) return next(err)
     console.log(`-- ✅ 🔥 Finished download of '${title}'`)
+    if(path.extname(fsPath) == '.zip'){
+      console.log(`-- 📁 Starting extraction of '${title}'`)
+      zip = new admzip(fsPath)
+      zip.extractAllTo(path.join(fsPath, '..'))
+      fs.unlinkSync(fsPath)
+      console.log(`-- ✅ Finished extraction of '${title}'`)
+    }
     next()
   })
 }
