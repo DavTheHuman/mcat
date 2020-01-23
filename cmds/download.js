@@ -9,6 +9,8 @@ const music = require('../lib/music')
 const MUSIC_DIR = music.MUSIC_DIR
 const fileNameForTrack = music.fileNameForTrack
 const fileNameForAlbumArt = music.fileNameForAlbumArt
+const fileNameForRelease = music.fileNameForRelease
+const fileNameForReleaseArt = music.fileNameForReleaseArt
 const readStdinJSON = music.readStdinJSON
 const ensureDir = music.ensureDir
 
@@ -18,6 +20,12 @@ const trackToDownloadURL = (track) => {
 }
 const coverToDownloadURL = (track) => {
   return `https://connect.monstercat.com/v2/release/${track.release.id}/cover`
+}
+const releaseToDownloadURL = (release) => {
+  return `https://connect.monstercat.com/v2/release/${release.id}/download?format=${DOWNLOAD_QUALITY}`
+}
+const releaseCoverURL = (release) => {
+  return `https://connect.monstercat.com/v2/release/${release.id}/cover`
 }
 
 const taskId = (task)=> task.type + task.uri + task.fs
@@ -39,7 +47,8 @@ const performTask = ({type, uri, fsPath, title}, next)=> {
 const download = (dbg, args, done) => {
   readStdinJSON((err, tracks)=> {
     if (err) return done(err)
-    console.log(`-- 💡  Got ${tracks.length} tracks...`)
+    var isReleases = (tracks[0].catalogId != undefined)
+    console.log(`-- 💡  Got ${tracks.length} ${isReleases ? 'releases' : 'tracks'}...`)
     var tasks = {}
     addTask = (t, {artistsTitle, title})=> {
       t.title = `${artistsTitle} - ${title}`
@@ -47,8 +56,8 @@ const download = (dbg, args, done) => {
       tasks[t.fsPath] = t
     }
     _.each(tracks, (t)=> {
-      addTask({ type: 'music', uri: trackToDownloadURL(t), fsPath: fspvr.reformatPath(fileNameForTrack(t)) }, t)
-      addTask({ type: 'image', uri: coverToDownloadURL(t), fsPath: fspvr.reformatPath(fileNameForAlbumArt(t)) }, t)
+      addTask({ type: 'music', uri: isReleases ? releaseToDownloadURL(t) : trackToDownloadURL(t), fsPath: fspvr.reformatPath(isReleases ? fileNameForRelease(t) : fileNameForTrack(t)) }, t)
+      addTask({ type: 'image', uri: isReleases ? releaseCoverURL(t) : coverToDownloadURL(t), fsPath: fspvr.reformatPath(isReleases ? fileNameForReleaseArt(t) : fileNameForAlbumArt(t)) }, t)
     })
 
 
@@ -57,10 +66,10 @@ const download = (dbg, args, done) => {
     tally = (obj, type)=> { obj[type] = (obj[type] || 0) + 1 }
     _.each(endTasks, ({type})=> { tally(typeStats, type)
     });
-    console.log(`-- 🔥 🔥  Starting Download of ${typeStats.music} songs for ${typeStats.image} albums.`)
+    console.log(`-- 🔥 🔥  Starting Download of ${typeStats.music} ${isReleases ? 'releases' : 'songs'} and ${typeStats.image} images.`)
     async.eachLimit(endTasks, 32, performTask, (err)=> {
       if (err) return done(err)
-      console.log(`-- ✅ 🔥 Finished downloading all ${typeStats.music} songs and ${typeStats.image} images; avalible at '${MUSIC_DIR}'`)
+      console.log(`-- ✅ 🔥 Finished downloading all ${typeStats.music} ${isReleases ? 'releases' : 'songs'} and ${typeStats.image} images; avalible at '${MUSIC_DIR}'`)
       done()
     })
   });
