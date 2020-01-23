@@ -14,7 +14,10 @@ const ensureDir = music.ensureDir
 
 const DOWNLOAD_QUALITY = 'mp3_320'
 const trackToDownloadURL = (track) => {
-  return `https://connect.monstercat.com/api/release/${track.release._id}/download?method=download&type=${DOWNLOAD_QUALITY}&track=${track._id}`
+  return `https://connect.monstercat.com/v2/release/${track.release.id}/track-download/${track.id}?format=${DOWNLOAD_QUALITY}`
+}
+const coverToDownloadURL = (track) => {
+  return `https://connect.monstercat.com/v2/release/${track.release.id}/cover`
 }
 
 const taskId = (task)=> task.type + task.uri + task.fs
@@ -45,7 +48,7 @@ const download = (dbg, args, done) => {
     }
     _.each(tracks, (t)=> {
       addTask({ type: 'music', uri: trackToDownloadURL(t), fsPath: fspvr.reformatPath(fileNameForTrack(t)) }, t)
-      addTask({ type: 'image', uri: t.release.coverUrl, fsPath: fspvr.reformatPath(fileNameForAlbumArt(t)) }, t)
+      addTask({ type: 'image', uri: coverToDownloadURL(t), fsPath: fspvr.reformatPath(fileNameForAlbumArt(t)) }, t)
     })
 
 
