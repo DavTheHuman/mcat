@@ -3,16 +3,16 @@ const _ = require('lodash')
 const monstercat = require('../lib/monstercat')
 
 const PAGE_SIZE = 50
-const getPage = (skip, isReleases, results, done)=> {
+const getPage = (page, isReleases, results, done)=> {
   if (typeof(results) == 'function') {
     done = results
     results = []
   }
-  console.log(`-- 💌  Requesting Monstercat Catalog (page ${skip/PAGE_SIZE}).`)
-  monstercat.request('GET', `/v2/${isReleases ? 'releases' : 'catalog/browse'}?limit=${PAGE_SIZE}&skip=${skip}`, (err, res, body)=> {
+  console.log(`-- 💌  Requesting Monstercat Catalog (page ${page}).`)
+  monstercat.request('GET', `/v2/${isReleases ? 'releases' : 'catalog/browse'}?limit=${PAGE_SIZE}&skip=${page * PAGE_SIZE}`, (err, res, body)=> {
     if (err) return done(err, null, false)
     const parsedBody = JSON.parse(body)
-    console.log(`-- ⬇️  Got ${parsedBody.results.length} ${isReleases ? 'releases' : 'tracks'} from Monstercat Catalog (page ${skip/PAGE_SIZE}).`)
+    console.log(`-- ⬇️  Got ${parsedBody.results.length} ${isReleases ? 'releases' : 'tracks'} from Monstercat Catalog (page ${page}).`)
 
     // Concat; less re-allocation
     _.each(parsedBody.results, (e)=> results.push(e))
@@ -21,7 +21,7 @@ const getPage = (skip, isReleases, results, done)=> {
     if (parsedBody.results.length == 0) return done(null, results)
 
     // Get next pages recursively; Catalog is small enough this is safe
-    return getPage(skip + parsedBody.results.length, isReleases, results, done)
+    return getPage(page + 1, isReleases, results, done)
   })
 
 }
