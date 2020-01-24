@@ -42,6 +42,8 @@ const releaseType = (onlyType) => {
   return ({type}) => type == onlyType
 }
 
+const isCompilation = ({artistsTitle}) => artistsTitle == "Monstercat" || artistsTitle == "Various Artists"
+
 const select = (dbg, args, done) => {
   const catalog = require(monstercat.CATALOG_PATH);
   var res = catalog
@@ -89,6 +91,8 @@ const select = (dbg, args, done) => {
   runFilterIf('--no-ep', not(releaseType('EP')), 'Excludes EPs')
   runFilterIf('--no-album', not(releaseType('Album')), 'Excludes albums')
   runFilterIf('--no-podcast', not(releaseType('Podcast')), 'Excludes podcasts')
+  runFilterIf('--compilation', isCompilation, 'Selects only Monstercat compilation albums')
+  runFilterIf('--no-compilation', not(isCompilation), 'Excludes Monstercat compilation albums')
   runFilterWithArg('--after', releaseAfter, 'Selects releases after the specified date.')
   runFilterWithArg('--before', releaseBefore, 'Selects releases before the specified date.')
   }
