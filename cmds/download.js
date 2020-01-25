@@ -38,16 +38,27 @@ const performTask = ({type, uri, fsPath, title}, next)=> {
   ensureDir(path.dirname(fsPath))
   console.log(`-- 💌  Starting download of '${title}'`)
   monstercat.download(uri, fsPath, (err)=> {
-    if (err) return next(err)
-    console.log(`-- ✅ 🔥 Finished download of '${title}'`)
-    if(path.extname(fsPath) == '.zip'){
-      console.log(`-- 📁 Starting extraction of '${title}'`)
-      zip = new admzip(fsPath)
-      zip.extractAllTo(path.join(fsPath, '..'))
-      fs.unlinkSync(fsPath)
-      console.log(`-- ✅ Finished extraction of '${title}'`)
+    if(err){
+      fs.appendFile(path.join(monstercat.STATE_PATH, 'log.txt'), `'${Date(Date.now())}': Failed download of '${fsPath}' with error '${err}'\r\n`, function (er){if(er) throw er})
+      console.log(`-- ❌ Failed download of '${title}', log file available at '${path.join(monstercat.STATE_PATH, 'log.txt')}'`)
+      next()
     }
-    next()
+    else{
+      console.log(`-- ✅ 🔥 Finished download of '${title}'`)
+      if(path.extname(fsPath) == '.zip'){
+        console.log(`-- 📁 Starting extraction of '${title}'`)
+        try{
+          zip = new admzip(fsPath)
+          zip.extractAllTo(path.join(fsPath, '..'))
+          fs.unlinkSync(fsPath)
+          console.log(`-- ✅ Finished extraction of '${title}'`)
+        }
+        catch{
+          fs.appendFile(path.join(monstercat.STATE_PATH, 'log.txt'), `'${Date(Date.now())}': Failed extraction of '${fsPath}'\r\n`, function (err){if(err) throw err})
+          console.log(`-- ❌ Failed extraction of '${title}', log file available at '${path.join(monstercat.STATE_PATH, 'log.txt')}'`)
+        }
+      }
+      next()}
   })
 }
 
