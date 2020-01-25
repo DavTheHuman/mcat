@@ -2,7 +2,6 @@ const fs = require('fs')
 const _ = require('lodash')
 const async = require('async')
 const path = require('path')
-const fspvr = require('fspvr')
 const admzip = require('adm-zip')
 const monstercat = require('../lib/monstercat')
 
@@ -64,8 +63,8 @@ const download = (dbg, args, done) => {
       tasks[t.fsPath] = t
     }
     _.each(tracks, (t)=> {
-      addTask({ type: 'music', uri: isReleases ? releaseToDownloadURL(t) : trackToDownloadURL(t), fsPath: fspvr.reformatPath(isReleases ? fileNameForRelease(t) : fileNameForTrack(t)) }, t)
-      addTask({ type: 'image', uri: isReleases ? releaseCoverURL(t) : coverToDownloadURL(t), fsPath: fspvr.reformatPath(isReleases ? fileNameForReleaseArt(t) : fileNameForAlbumArt(t)) }, t)
+      addTask({ type: 'music', uri: isReleases ? releaseToDownloadURL(t) : trackToDownloadURL(t), fsPath: isReleases ? fileNameForRelease(t) : fileNameForTrack(t) }, t)
+      addTask({ type: 'image', uri: isReleases ? releaseCoverURL(t) : coverToDownloadURL(t), fsPath: isReleases ? fileNameForReleaseArt(t) : fileNameForAlbumArt(t) }, t)
     })
 
 
